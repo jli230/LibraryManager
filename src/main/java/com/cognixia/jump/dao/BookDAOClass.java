@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cognixia.jump.connection.ConnectionManager;
@@ -13,7 +14,7 @@ import com.cognixia.jump.model.Patron;
 
 public class BookDAOClass implements BookDAO {
 	private static final Connection conn = ConnectionManager.getConnection();
-	private static final String VIEW_ALL_BOOKS = "SELECT * FROM patron";//dummy line, code can be performed in jsp
+	private static final String VIEW_ALL_BOOKS = "SELECT * FROM book";//dummy line, code can be performed in jsp
 	private static final String SELECT_BOOK_BY_ISBN = "SELECT * FROM book WHERE isbn=?";
 	private static final String ADD_BOOK = "INSERT INTO book(isbn, title, descr, rented, added_to_library) values (?, ?, ?, ?, ?)";
 	private static final String UPDATE_BOOK = "UPDATE book SET title = ?, descr = ? WHERE isbn=?";
@@ -37,12 +38,32 @@ public class BookDAOClass implements BookDAO {
 		return false;
 	}
 
+	
+	
+	
 	@Override
 	public List<Book> getAllBooks() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> books = new ArrayList<>();
+		try (PreparedStatement pstmt = conn.prepareStatement(VIEW_ALL_BOOKS);
+				ResultSet rs = pstmt.executeQuery();){
+			while(rs.next()) {
+				books.add(new Book(rs.getString("isbn"),
+						rs.getString("title"), 
+						rs.getString("descr"), 
+						rs.getBoolean("rented"),
+						rs.getDate("added_to_library").toLocalDate()));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return books;
 	}
 
+	
+	
+	
 	@Override
 	public Book getBookById(int isbn) {
 		Book book = null;
