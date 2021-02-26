@@ -16,7 +16,7 @@
 	LoginServlet loginStatus = new LoginServlet();
 	if(loginStatus.isLibrarianLoggedIn() == true){
 %>
-		<a href="<%= request.getContextPath()%>/updatepatronsadmin.jsp">Update Account</a>
+		<a href="<%= request.getContextPath()%>/updatepatrons.jsp">Update Account</a>
 		<a href="<%= request.getContextPath()%>/viewpatrons.jsp">View and Unfreeze Patrons</a> 
 	</nav>
 	You are currently logged in as a: Librarian
@@ -26,6 +26,7 @@
 %>
 	
 		<a href="<%= request.getContextPath()%>/updatepatrons.jsp">Update Account</a>
+		<a href="<%= request.getContextPath()%>/viewbook.jsp">View Library Books</a>
 	</nav>
 	You are currently logged in as a: Patron
 <%
