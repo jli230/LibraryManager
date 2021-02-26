@@ -12,6 +12,7 @@
 	<nav>
 		<a href="<%= request.getContextPath()%>">Home</a>   
 		<a href="<%= request.getContextPath()%>/login.jsp">Login</a>
+		<a href="<%= request.getContextPath()%>/viewbook.jsp">View Library Books</a>
 <%
 	LoginServlet loginStatus = new LoginServlet();
 	if(loginStatus.isLibrarianLoggedIn() == true){
@@ -26,7 +27,6 @@
 %>
 	
 		<a href="<%= request.getContextPath()%>/updatepatrons.jsp">Update Account</a>
-		<a href="<%= request.getContextPath()%>/viewbook.jsp">View Library Books</a>
 	</nav>
 	You are currently logged in as a: Patron
 <%
